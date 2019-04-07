@@ -14,15 +14,7 @@ RUN rm -rf elasticsearch-6.2.4.deb
 
 RUN chown -R elasticsearch:elasticsearch /var/lib/elasticsearch
 
-RUN echo 'transport.host: localhost' >> /etc/elasticsearch/elasticsearch.yml && \
-    echo 'transport.tcp.port: 9300' >> /etc/elasticsearch/elasticsearch.yml && \
-    echo 'http.port: 9200' >> /etc/elasticsearch/elasticsearch.yml && \
-    echo 'network.host: 0.0.0.0' >> /etc/elasticsearch/elasticsearch.yml && \
-
-    # this settings is needed for elastic beanstalk
-    echo 'http.cors.enabled: true' >> /etc/elasticsearch/elasticsearch.yml  && \
-    echo 'http.cors.allow-origin: "*"' >> /etc/elasticsearch/elasticsearch.yml
-
+COPY ./elasticsearch.yml /etc/elasticsearch
 
 COPY ./supervisord/supervisord-elasticsearch.conf /etc/supervisor/conf.d
 
